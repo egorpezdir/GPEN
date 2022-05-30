@@ -26,8 +26,8 @@ class FaceEnhancement(object):
         # the mask for pasting restored faces back
         self.mask = np.zeros((512, 512), np.float32)
         cv2.rectangle(self.mask, (26, 26), (486, 486), (1, 1, 1), -1, cv2.LINE_AA)
-        self.mask = cv2.GaussianBlur(self.mask, (101, 101), 11)
-        self.mask = cv2.GaussianBlur(self.mask, (101, 101), 11)
+        self.mask = cv2.GaussianBlur(self.mask, (101, 101), 4)
+        self.mask = cv2.GaussianBlur(self.mask, (101, 101), 4)
 
         self.kernel = np.array((
                 [0.0625, 0.125, 0.0625],
@@ -44,8 +44,8 @@ class FaceEnhancement(object):
     def mask_postprocess(self, mask, thres=20):
         mask[:thres, :] = 0; mask[-thres:, :] = 0
         mask[:, :thres] = 0; mask[:, -thres:] = 0
-        mask = cv2.GaussianBlur(mask, (101, 101), 11)
-        mask = cv2.GaussianBlur(mask, (101, 101), 11)
+        mask = cv2.GaussianBlur(mask, (101, 101), 4)
+        mask = cv2.GaussianBlur(mask, (101, 101), 4)
         return mask.astype(np.float32)
 
     def process(self, img, aligned=False):
